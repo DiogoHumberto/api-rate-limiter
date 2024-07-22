@@ -14,7 +14,7 @@ public class ProcessService {
 
 	private final long sleepTimeBuscar = 10 * 1000;
 
-	private final long sleepTimeRealizar = 10 * 1000;
+	private final long sleepTimeRealizar = 3 * 1000;
 
 //	@RateLimiter(name = "simpleRateLimit") // também funciona em service
 	public boolean realizar(CompraDTO compra) {
@@ -33,12 +33,12 @@ public class ProcessService {
 		return true;
 	}
 
-	public String buscar(String id) {
+	public boolean buscar(Integer timeProcess) {
 
 		try {
 			log.info("<--> em processamento Thread ID: {} thread name: {} time: {} segundos", Thread.currentThread().getId() , Thread.currentThread().getName(),
-					(sleepTimeBuscar / 1000));
-			Thread.sleep(sleepTimeBuscar);
+					(timeProcess / 1000));
+			Thread.sleep(timeProcess);
 			log.info("--> fimm process thread id {} ", Thread.currentThread().getId());
 
 		} catch (InterruptedException e) {
@@ -46,7 +46,7 @@ public class ProcessService {
 			e.printStackTrace();
 		}
 
-		return id;
+		return true;
 	}
 
 }

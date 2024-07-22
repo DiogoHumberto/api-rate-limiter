@@ -2,6 +2,7 @@ package br.com.study.ratelimiter.config;
 
 import br.com.study.ratelimiter.exception.CompraNotFound;
 import br.com.study.ratelimiter.exception.ExceptionResponseDto;
+import io.github.resilience4j.bulkhead.BulkheadFullException;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -22,10 +23,10 @@ import java.util.Map;
 @Log4j2
 public class GlobalHandlerExceptions {
 
-	@ExceptionHandler({RequestNotPermitted.class })
+	@ExceptionHandler({RequestNotPermitted.class, BulkheadFullException.class})
 	@ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
 	public ResponseEntity<String> handleBulkheadFullException( RuntimeException ex) {
-		log.error("-------->>>> Too Many Requests");
+		log.error("!!!-------->>>> Too Many Requests");
 		return new ResponseEntity<>("Too many concurrent requests - please try again later", HttpStatus.TOO_MANY_REQUESTS);
 	}
 
