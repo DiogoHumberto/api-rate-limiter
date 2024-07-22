@@ -1,0 +1,78 @@
+server:
+  port: 8080
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+  health:
+    rate limiters:
+      enabled: true
+
+spring:
+  application:
+    name: loja
+  banner:
+    location: classpath:/templates/banner.txt
+
+resilience4j.ratelimiter:
+  instances:
+    simpleRateLimit:
+      limitForPeriod: 2
+      limitRefreshPeriod: 15s
+      timeoutDuration: 5s
+      registerHealthIndicator: true
+      subscribeForEvents: true
+      eventConsumerBufferSize: 100
+    rateLimiterEventsSpecific:
+      limitForPeriod: 2 #  O número máximo de chamadas permitidas por período de refresh
+      limitRefreshPeriod: 10s # O período de tempo no qual o limit-for-period será renovado millis, segundos ex: 500ms
+      timeoutDuration: 5s #O tempo máximo que uma chamada pode esperar antes de obter um permissão do RateLimiter.
+      registerHealthIndicator: true # por padrao é false - Se deve ou não registrar um indicador de saúde
+      subscribeForEvents: true #  Se deve ou não subscrever a eventos defult
+      eventConsumerBufferSize: 100 #  O tamanho do buffer para o consumidor de eventos (se os eventos estiverem habilitados)
+
+#resilience4j:
+#  rate-limiter:
+#    configs:
+#      default:
+#        limitForPeriod: 1
+#        limitRefreshPeriod: 20s
+#        timeoutDuration: 0ms
+#        waitInterval: 0
+#        allow-health-indicator-to-fail: true
+#        register-health-indicator: true
+#        subscribe-for-events: true
+#    metrics:
+#        enabled: 'true'
+
+    instances:
+      myDefaultRateLimiter:
+        base-config: default
+
+  bulkhead:
+    metrics:
+      enabled: 'true'
+      allow-health-indicator-to-fail: 'true'
+    instances:
+      bulkheadApi:
+        max-wait-duration: '1'
+        max-concurrent-calls: '3'
+#  rate-limiter:
+#    instances:
+#      max-rate:
+#        limit-for-period: '1'
+#        limit-refresh-period: 50s
+#        limitForPeriod: 1
+#  retry:
+#    instances:
+#      compra-fornecedor:
+#        wait-duration: 2s
+#        max-attempts: '3'
+#        enable-exponential-backoff: 'true'
+
+
