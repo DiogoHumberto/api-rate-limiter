@@ -28,15 +28,15 @@ RateLimiter é um padrão de controle de taxa que limita a quantidade de solicit
             # Outras propriedades opcionais podem ser adicionadas conforme necessário
 
 - **limitForPeriod:** Define o número máximo de permissões que podem ser adquiridas por período.
-- **limitRefreshPeriod:**Intervalo de tempo em que o número de permissões é reiniciado.
-- **timeoutDuration:**Duração máxima que uma solicitação pode aguardar por uma permissão antes de falhar.
+- **limitRefreshPeriod:** Intervalo de tempo em que o número de permissões é reiniciado.
+- **timeoutDuration:** Duração máxima que uma solicitação pode aguardar por uma permissão antes de falhar.
 
 
 ### Fluxo de funcionamento de requisições
 
-A image abaixo visa ilustrar o funcionamente dos ciclos do rate emulando request e demostrando a capacidade de tolerancia caso todos os slots definidos estejam ocupados. Ainda assim conseguimos configurar um time para que request consiga sequencia. Caso contrario será emitido como exception.
+A image abaixo visa ilustrar o funcionamente dos ciclos do rate emulando request e demostrando a capacidade de tolerancia caso todos os slots definidos estejam ocupados. Ainda assim conseguimos configurar um time para que request consiga sequenciar. Caso contrario será laçado uma exception.
 
-Lembrando que conforme é configurados as instancias ou defult sobre esse recurso, teremos impactos na performasse do serviço, seja positiva ou negativa.
+Lembrando que conforme é configurados as instancias ou defult sobre esse recurso, teremos impactos na performasse do serviço.
 
 ![img.png](docs/images/ratelimiter-img.png)
 
@@ -149,7 +149,7 @@ Foi adequado os parametros conforme abaixo para possibilitar uma analise
 
 ## Resultados
 
->V1 - Podemos verificar no teste **rateLimit** definido com 50 request com refresh 8s timeoutDuration de 2s um Throughput de 72.3/sec ou seja maior V3* - bulkhead - A taxa de erro ficou 85% com average 8s
+>V1 - Podemos verificar no teste **rateLimit** definido com 50 request com refresh 8s timeoutDuration de 2s. Tivemos como saida um Throughput de 72.3/sec ou seja maior V3* - bulkhead - A taxa de erro ficou 85% com average 8s
  
 ![result-teste-v1.jpg](docs%2Fimages%2Fresult-teste-v1.jpg)
 
@@ -157,11 +157,11 @@ Foi adequado os parametros conforme abaixo para possibilitar uma analise
 
 ![result-teste-v2.jpg](docs%2Fimages%2Fresult-teste-v2.jpg)
 
->V3 - O uso **Bulkhead** limitamos em 50 request com maxWaitDuration em 4s. Pode se verificar uma taxa de erro 55%, menor que parametrizados pelo RateLimiter. Porém um Throughput 35,2/sec que indica uma capacidade menor de atender por segundo. Outro fator que pode se destacar é aumento medio do time de response, porém como processamento está definifo em 10s e com menor taxa de erro pode se entender como um efeito da parametrização.  
+>V3 - O uso **Bulkhead** limitamos em 50 request com maxWaitDuration em 4s. Pode se verificar uma taxa de erro 55%, é menor do que foi parametrizados no teste de RateLimiter. Porém um Throughput 35,2/sec que indica uma capacidade menor de atender request por segundo. Outro fator que pode se destacar é aumento medio do time de response, porém como processamento está definifo em 10s e com menor taxa de erro pode se entender como um efeito da parametrização.  
 
 ![result-teste-v3-bulkhead.jpg](docs%2Fimages%2Fresult-teste-v3-bulkhead.jpg)
 
->V3 - Outro teste elaborado foi reduzir na estrategia **Bulkhead** o maxWaitDuration para zero. Isso faz com que não aguarde liberação na fila de processamento. Pode se verificar maior percentual de erro e Throughput (10.1/sec) menor capacidade por segundo. Como conseguencia maior indice de erro, temos menor tempo de resposta.
+>V3 - Outro teste elaborado foi a de reduzir na estrategia de **Bulkhead** o maxWaitDuration para zero. Isso faz com que não se aguarde liberação na fila de processamento. Verificamos maior percentual de erro e Throughput (10.1/sec) menor capacidade por segundo. Como conseguencia maior indice de erro, temos menor tempo de resposta.
 
 ![result-teste-v3-waitDuration-zero.jpg](docs%2Fimages%2Fresult-teste-v3-waitDuration-zero.jpg)
 
