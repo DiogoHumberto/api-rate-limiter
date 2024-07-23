@@ -41,8 +41,8 @@ resilience4j.ratelimiter:
 resilience4j.bulkhead:
   configs:
     default:
-      eventConsumerBufferSize: 100
-      registerHealthIndicator: true
+      eventConsumerBufferSize: 100 # Tamanho do buffer de eventos para o Bulkhead
+      registerHealthIndicator: true # Registrar indicador de saúde para o Bulkhead
   instances:
     bulkheadWithConcurrentCalls:
       maxConcurrentCalls: 5

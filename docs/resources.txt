@@ -1,0 +1,7 @@
+- https://bootcamptoprod.com/spring-boot-resilience4j-bulkhead/
+
+- https://bootcamptoprod.com/resilience4j-rate-limiter/
+
+- https://medium.com/@sivaramansankar2019/bulkhead-pattern-in-microservices-spring-boot-example-d82db2c0cc5
+
+- https://github.com/buingoctruong/rate-limiting-pattern-spring-boot/blob/master/payment-service/src/main/resources/application.yaml
