@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.interplacecom</groupId>
 	<artifactId>api-rete-limite</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>api-rete-limite</name>
 	<description>api-rete-limite</description>
 	<properties>

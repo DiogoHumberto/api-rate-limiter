@@ -1,5 +1,18 @@
+FROM openjdk:8-jdk-slim AS builder
+
+RUN apt-get update && \
+    apt-get install -y maven && \
+    apt-get clean;
+
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src src
+RUN mvn clean package -DskipTests
+
 FROM openjdk:8-jdk-slim
-ARG JAR_FILE=loja/target/*.jar
-COPY ${JAR_FILE} app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom ","-jar","/app.jar"]
+WORKDIR /app
+# Copie o JAR construído a partir da etapa anterior
+COPY --from=builder /app/target/*.jar application.jar
+# Defina o comando de inicialização do aplicativo
+CMD ["java", "-jar", "application.jar"]

@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "d5994116-e573-4c1f-8c50-801f721987dc",
+		"name": "Spring - resilience4j",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28237617"
+	},
+	"item": [
+		{
+			"name": "Normal endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"endereco\": {\r\n        \"rua\": \"teste\",\r\n        \"numero\": 3,\r\n        \"estado\": \"teste\"\r\n    },\r\n    \"itens\": [\r\n        {\r\n            \"id\": 6565,\r\n            \"qtd\": \"6\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profile-host}}/resilience",
+					"host": [
+						"{{profile-host}}"
+					],
+					"path": [
+						"resilience"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resilience - v1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"endereco\": {\r\n        \"rua\": \"teste\",\r\n        \"numero\": 3,\r\n        \"estado\": \"teste\"\r\n    },\r\n    \"itens\": [\r\n        {\r\n            \"id\": 6565,\r\n            \"qtd\": \"6\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profile-host}}/resilience/v1",
+					"host": [
+						"{{profile-host}}"
+					],
+					"path": [
+						"resilience",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resilience - v2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"endereco\" : {\r\n        \"rua\" : \"teste\",\r\n        \"numero\" : 3,\r\n        \"estado\" : \"teste\"\r\n\r\n    },\r\n    \"itens\" : [\r\n        {\r\n            \"id\": 6565,\r\n            \"qtd\": \"6\"\r\n        }\r\n    ]\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profile-host}}/resilience/v2",
+					"host": [
+						"{{profile-host}}"
+					],
+					"path": [
+						"resilience",
+						"v2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resilience - v3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"endereco\" : {\r\n        \"rua\" : \"teste\",\r\n        \"numero\" : 3,\r\n        \"estado\" : \"teste\"\r\n\r\n    },\r\n    \"itens\" : [\r\n        {\r\n            \"id\": 6565,\r\n            \"qtd\": \"6\"\r\n        }\r\n    ]\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profile-host}}/resilience/v3",
+					"host": [
+						"{{profile-host}}"
+					],
+					"path": [
+						"resilience",
+						"v3"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "profile-host",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
