@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import javax.validation.constraints.Pattern;
 @RequiredArgsConstructor
 @Log4j2
 public class ResilienceController {
+
 
 	private final ProcessService processService;
 
@@ -75,6 +77,12 @@ public class ResilienceController {
 	public ResponseEntity<String> bulkheadWithConcurrentCalls(@RequestParam Integer secondsProcess) {
 		log.info("------------>> INIT APPLY GET bulkheadWithConcurrentCalls <<--------------");
 		return ResponseEntity.ok(processService.buscar(secondsProcess)? "Efetivada com sucesso!!" : null);
+	}
+
+	@GetMapping("/env")
+	public ResponseEntity<String> buscaEnvPc() {
+
+		return ResponseEntity.ok("teste");
 	}
 
 }
