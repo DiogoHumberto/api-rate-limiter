@@ -38,8 +38,7 @@ A image abaixo visa ilustrar o funcionamente dos ciclos do rate emulando request
 
 Lembrando que conforme é configurados as instancias ou defult sobre esse recurso, teremos impactos na performasse do serviço.
 
-![img.png](docs/images/ratelimiter-img.png)
-
+![rateLimiter-draw-new.png](docs%2Fimages%2FrateLimiter-draw-new.png)
 
 ---
 
