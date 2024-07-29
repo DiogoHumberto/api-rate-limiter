@@ -1,53 +1,20 @@
-server:
-  port: 8080
-
-management:
-  endpoint:
-    health:
-      show-details: always
-  endpoints:
-    web:
-      exposure:
-        include: health
-  health:
-    rate limiters:
-      enabled: true
-
 spring:
+  config:
+    import: configserver:http://localhost:8888
   application:
-    name: loja
+    name: app-ratelimiter
   banner:
     location: classpath:/templates/banner.txt
 
-resilience4j.ratelimiter:
-  instances:
-    simpleRateLimit:
-      limitForPeriod: 50
-      limitRefreshPeriod: 8s
-      timeoutDuration: 2s
-      registerHealthIndicator: true
-      subscribeForEvents: true
-      eventConsumerBufferSize: 100
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: dev  # ou 'prod', conforme necessário
+      #label: main
+      fail-fast: true # Opcional, para falhar rapidamente se não conseguir se conectar ao Config Server
+#      client:
+#        poll-interval: 10000 # Verifica a cada 30 segundos
 
-    rateLimiterEventsSpecific:
-      limitForPeriod: 50 #  O número máximo de chamadas permitidas por período de refresh
-      limitRefreshPeriod: 50s # O período de tempo no qual o limit-for-period será renovado millis, segundos ex: 500ms
-      timeoutDuration: 0 #O tempo máximo que uma chamada pode esperar antes de obter um permissão do RateLimiter.
-      registerHealthIndicator: true # por padrao é false - Se deve ou não registrar um indicador de saúde
-      subscribeForEvents: true #  Se deve ou não subscrever a eventos defult
-      eventConsumerBufferSize: 100 #  O tamanho do buffer para o consumidor de eventos (se os eventos estiverem habilitados)
-
-#O Bulkhead é uma técnica de isolamento de carga
-# limita o número máximo de threads ou solicitações que podem ser executadas simultaneamente
-resilience4j.bulkhead:
-  configs:
-    default:
-      eventConsumerBufferSize: 100 # Tamanho do buffer de eventos para o Bulkhead
-      registerHealthIndicator: true # Registrar indicador de saúde para o Bulkhead
-  instances:
-    bulkheadWithConcurrentCalls:
-      maxConcurrentCalls: 50
-      maxWaitDuration: 0 #200ms #define quanto tempo uma chamada está disposta a esperar para obter uma entrada no Bulkhead
 
 #  retry:
 #    instances:

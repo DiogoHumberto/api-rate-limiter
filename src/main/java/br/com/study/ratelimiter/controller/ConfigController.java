@@ -2,7 +2,7 @@ package br.com.study.ratelimiter.controller;
 
 
 import br.com.study.ratelimiter.config.PropertiesConfigLoader;
-import br.com.study.ratelimiter.service.RateLimiterConfigService;
+import br.com.study.ratelimiter.service.RateLimiterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ public class ConfigController {
 
     private final PropertiesConfigLoader propertiesConfigLoader;
 
-    private final RateLimiterConfigService rateLimiterConfigService;
+    private final RateLimiterService rateLimiterConfigService;
 
     @PostMapping("/refreshRateLimiter")
     public String refreshRateLimiter() {

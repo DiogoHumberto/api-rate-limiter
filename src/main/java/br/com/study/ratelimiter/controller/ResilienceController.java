@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
+import static br.com.study.ratelimiter.utils.ConstantsUltils.RATE_LIMITER_SIMPLE;
+import static br.com.study.ratelimiter.utils.ConstantsUltils.RATE_LIMITER_SPECIFIC;
+
 @RestController
 @RequestMapping("/resilience")
 @RequiredArgsConstructor
@@ -36,14 +39,14 @@ public class ResilienceController {
 	//@CircuitBreaker(name = "default", fallbackMethod = "fallbackMethod")
 	//@RateLimiter(name = "max-rate")
 	@PostMapping("/v1")
-	@RateLimiter(name = "simpleRateLimit")
+	@RateLimiter(name = RATE_LIMITER_SIMPLE)
 	public ResponseEntity<String> simpleRateLimit(@Valid @RequestBody CompraDTO compra) {
 		log.info("------------>> INIT APPLY POST simpleRateLimit <<--------------");
 		return ResponseEntity.ok(processService.realizar(compra)? "Efetivada com sucesso!!" : null);
 	}
 
 	@GetMapping("/v1")
-	@RateLimiter(name = "simpleRateLimit")
+	@RateLimiter(name = RATE_LIMITER_SIMPLE)
 	public ResponseEntity<String> simpleRateLimit(@RequestParam Integer secondsProcess) {
 		log.info("------------>> INIT APPLY GET simpleRateLimit <<--------------");
 		return ResponseEntity.ok(processService.buscar(secondsProcess)? "Efetivada com sucesso!!" : null);
@@ -51,7 +54,7 @@ public class ResilienceController {
 
 
 	@PostMapping("/v2")
-	@RateLimiter(name = "rateLimiterEventsSpecific")
+	@RateLimiter(name = RATE_LIMITER_SPECIFIC)
 	public ResponseEntity<String> rateLimiterEventsSpecific(@Valid @RequestBody CompraDTO compra) {
 
 		log.info("------------>> INIT APPLY POST rateLimiterEventsSpecific <<--------------");
@@ -59,7 +62,7 @@ public class ResilienceController {
 	}
 
 	@GetMapping("/v2")
-	@RateLimiter(name = "rateLimiterEventsSpecific")
+	@RateLimiter(name = RATE_LIMITER_SPECIFIC)
 	public ResponseEntity<String> rateLimiterEventsSpecific(@RequestParam Integer secondsProcess) {
 		log.info("------------>> INIT APPLY GET rateLimiterEventsSpecific <<--------------");
 		return ResponseEntity.ok(processService.buscar(secondsProcess)? "Efetivada com sucesso!!" : null);

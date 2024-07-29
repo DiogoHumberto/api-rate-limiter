@@ -12,6 +12,7 @@ import java.util.Properties;
 public class PropertiesConfigLoader {
 
     private Properties properties = new Properties();
+
     private final String propertiesFilePath = System.getenv("PROPERTIES_FILE_PATH"); // Atualize com o caminho do arquivo externo
 
     public PropertiesConfigLoader() {
