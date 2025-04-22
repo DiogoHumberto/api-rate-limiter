@@ -20,15 +20,22 @@ public class RateLimiterRefresh {
 
     private final RateLimiterRegistry rateLimiterRegistry;
 
+    private final FixConfigProperties fixConfigProperties;
 
     @EventListener
     public void handleRefreshEvent(org.springframework.cloud.context.environment.EnvironmentChangeEvent event) {
+
+        log.info("--->> refresh fixConfigProperties url {} key {}", fixConfigProperties.getApiUrl(), fixConfigProperties.getApiKey());
         // Atualize o RateLimiter se a configuração relevante mudar
         updateRateLimiter();
     }
 
     @RefreshScope
     public void updateRateLimiter() {
+
+        log.info("--->> refresh scoppe fixConfigProperties url {} key {}", fixConfigProperties.getApiUrl(), fixConfigProperties.getApiKey());
+
+        log.info("--->> rateLimiterProperties maps {}", rateLimiterProperties.getInstances());
 
         RateLimiterProperties.Configs simpleRateLimtconfig = rateLimiterProperties.getInstances().get(RATE_LIMITER_SIMPLE);
 

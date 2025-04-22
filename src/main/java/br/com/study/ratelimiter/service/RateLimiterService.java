@@ -1,5 +1,6 @@
 package br.com.study.ratelimiter.service;
 
+import br.com.study.ratelimiter.config.FixConfigProperties;
 import br.com.study.ratelimiter.config.PropertiesConfigLoader;
 import br.com.study.ratelimiter.config.RateLimiterProperties;
 import io.github.resilience4j.ratelimiter.RateLimiter;
@@ -7,14 +8,16 @@ import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.env.Environment;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
-import java.util.HashMap;
 
 import static br.com.study.ratelimiter.utils.ConstantsUltils.RATE_LIMITER_SPECIFIC;
 
@@ -29,9 +32,21 @@ public class RateLimiterService {
 
     private final RateLimiterProperties rateLimiterProperties;
 
+    private final FixConfigProperties fixConfigProperties;
+
     private final RestTemplate restTemplate;
 
     private final Environment environment;
+
+    @PostConstruct
+    public void init() {
+
+        log.info("--->> fixConfigProperties url {} key {}", fixConfigProperties.getApiUrl(), fixConfigProperties.getApiKey());
+
+        log.info("--->> rateLimiterProperties maps {}", rateLimiterProperties.getInstances());
+        // Código que você deseja executar na inicialização do serviço
+        log.info("--->> config init rateLiomiter : {} ", rateLimiterRegistry.getAllRateLimiters());
+    }
 
     @Scheduled(fixedRate = 60000, initialDelay = 60000) // A cada 60 segundos
     public void refreshConfigurations() {
@@ -58,12 +73,7 @@ public class RateLimiterService {
         }
     }
 
-    @PostConstruct
-    public void init() {
-        log.info("--->> rateLimiterProperties maps {}", rateLimiterProperties.getInstances());
-        // Código que você deseja executar na inicialização do serviço
-        log.info("--->> config init rateLiomiter : {} ", rateLimiterRegistry.getAllRateLimiters());
-    }
+
 
     public void updateRateLimiterConfig() {
 
